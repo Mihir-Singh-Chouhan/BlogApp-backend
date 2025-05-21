@@ -1,36 +1,34 @@
 package com.mihir.blog.blogAppApis.utils;
 
-import com.mihir.blog.blogAppApis.dto.UserDto;
+import com.mihir.blog.blogAppApis.dto.request.UserDto;
 import com.mihir.blog.blogAppApis.entities.User;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class UserServiceUtil {
 
+    private static final ModelMapper modelMapper = new ModelMapper();
+
     public static User dtoToUser(UserDto userDto){
-        return User.builder()
-//                .id(userDto.getId())
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .about(userDto.getAbout())
-                .build();
+//        return User.builder()
+//                   .id(userDto.getId())
+//                   .name(userDto.getName())
+//                   .email(userDto.getEmail())
+//                   .password(userDto.getPassword())
+//                   .about(userDto.getAbout())
+//                   .build();
+        return modelMapper.map(userDto,User.class);
     }
 
     public static UserDto userToDto(User user){
-//        UserDto userDto = new UserDto();
-//        userDto.setId(user.getId());
-//        userDto.setName(user.getName());
-//        userDto.setEmail(user.getEmail());
-//        userDto.setPassword(user.getPassword());
-//        userDto.setAbout(user.getAbout());
-//        return userDto;
-
-        return UserDto.builder()
+//        return UserDto.builder()
 //                      .id(user.getId())
-                      .name(user.getName())
-                      .email(user.getEmail())
-                      .password(user.getPassword())
-                      .about(user.getAbout())
-                      .build();
+//                      .name(user.getName())
+//                      .email(user.getEmail())
+//                      .password(user.getPassword())
+//                      .about(user.getAbout())
+//                      .build();
+        return modelMapper.map(user, UserDto.class);
     }
 }

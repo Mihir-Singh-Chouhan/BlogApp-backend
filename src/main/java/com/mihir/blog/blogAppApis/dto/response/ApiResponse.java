@@ -1,4 +1,4 @@
-package com.mihir.blog.blogAppApis.dao;
+package com.mihir.blog.blogAppApis.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

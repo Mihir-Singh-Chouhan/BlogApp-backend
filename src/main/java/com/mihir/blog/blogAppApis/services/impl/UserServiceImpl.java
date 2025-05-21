@@ -1,7 +1,7 @@
 package com.mihir.blog.blogAppApis.services.impl;
 
 import com.mihir.blog.blogAppApis.entities.User;
-import com.mihir.blog.blogAppApis.dto.UserDto;
+import com.mihir.blog.blogAppApis.dto.request.UserDto;
 import com.mihir.blog.blogAppApis.services.UserService;
 import com.mihir.blog.blogAppApis.repositories.UserRepository;
 import com.mihir.blog.blogAppApis.utils.UserServiceUtil;

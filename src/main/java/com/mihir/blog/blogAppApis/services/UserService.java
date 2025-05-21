@@ -1,6 +1,6 @@
 package com.mihir.blog.blogAppApis.services;
 
-import com.mihir.blog.blogAppApis.dto.UserDto;
+import com.mihir.blog.blogAppApis.dto.request.UserDto;
 
 import java.util.List;
 

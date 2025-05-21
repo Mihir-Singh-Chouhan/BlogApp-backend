@@ -1,8 +1,9 @@
 package com.mihir.blog.blogAppApis.controllers;
 
-import com.mihir.blog.blogAppApis.dao.ApiResponse;
-import com.mihir.blog.blogAppApis.dto.UserDto;
+import com.mihir.blog.blogAppApis.dto.response.ApiResponse;
+import com.mihir.blog.blogAppApis.dto.request.UserDto;
 import com.mihir.blog.blogAppApis.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
     {
        UserDto createUserDto = userService.createUser(userDto);
        return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable("id") Integer myId){  //since id and myId both are different strings so we specify here
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("id") Integer myId){  //since id and myId both are different strings so we specify here
         UserDto updatedUserDto = userService.updateUser(userDto,myId);
 //        return new ResponseEntity<>(updatedUserDto,HttpStatus.CREATED);
         return ResponseEntity.ok(updatedUserDto);
