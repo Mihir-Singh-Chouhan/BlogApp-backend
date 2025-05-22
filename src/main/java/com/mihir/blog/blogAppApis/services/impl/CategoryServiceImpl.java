@@ -7,20 +7,20 @@ import com.mihir.blog.blogAppApis.repositories.CategoryRepository;
 import com.mihir.blog.blogAppApis.services.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
     @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(()->new ResourceNotFoundException("Category","Category Id",categoryId));
         category.setCategoryTitle(categoryDto.getCategoryTitle());
-        category.setCategoryDescription(category.getCategoryDescription());
+        category.setCategoryDescription(categoryDto.getCategoryDescription());
         Category updatedCategory = this.categoryRepository.save(category);
         return this.modelMapper.map(updatedCategory, CategoryDto.class);
     }
