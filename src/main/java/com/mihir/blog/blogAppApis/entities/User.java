@@ -3,11 +3,13 @@ package com.mihir.blog.blogAppApis.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="users")
 @Getter
 @Setter
-@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +20,15 @@ public class User {
     private String password;
     private String about;
 
-    public User(Integer id, String name, String email, String password, String about) {
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Post> posts = new ArrayList<>();
+    public User(Integer id, String name, String email, String password, String about,List<Post> posts) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.about = about;
+        this.posts = posts;
     }
 
     public User() {

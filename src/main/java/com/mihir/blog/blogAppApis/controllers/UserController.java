@@ -15,10 +15,12 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @PostMapping("/")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
     {
