@@ -1,13 +1,13 @@
 package com.mihir.blog.blogAppApis.services;
 
-import com.mihir.blog.blogAppApis.dto.request.CategoryDto;
+import com.mihir.blog.blogAppApis.dto.request.CategoryRequest;
 
 import java.util.List;
 
 public interface CategoryService {
-    CategoryDto createCategory(CategoryDto categoryDto);
-    CategoryDto updateCategory(CategoryDto categoryDto,Integer categoryId);
-    CategoryDto getCategoryById(Integer categoryId);
-    List<CategoryDto> getAllCategory();
+    CategoryRequest createCategory(CategoryRequest categoryRequest);
+    CategoryRequest updateCategory(CategoryRequest categoryRequest, Integer categoryId);
+    CategoryRequest getCategoryById(Integer categoryId);
+    List<CategoryRequest> getAllCategory();
     void deleteCategory(Integer categoryId);
 }

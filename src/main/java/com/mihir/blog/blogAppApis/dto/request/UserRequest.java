@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserRequest {
     private Integer id;
 
     @NotEmpty

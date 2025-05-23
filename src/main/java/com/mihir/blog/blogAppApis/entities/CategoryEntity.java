@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
@@ -24,6 +24,6 @@ public class Category {
     @Column(name = "description")
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "categoryEntity",cascade = CascadeType.ALL)
+    private List<PostEntity> postEntities = new ArrayList<>();
 }

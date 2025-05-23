@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CategoryDto {
+public class CategoryRequest {
 
     private Integer categoryId;
 

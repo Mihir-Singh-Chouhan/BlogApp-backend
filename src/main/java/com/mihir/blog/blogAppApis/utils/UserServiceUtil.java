@@ -1,7 +1,7 @@
 package com.mihir.blog.blogAppApis.utils;
 
-import com.mihir.blog.blogAppApis.dto.request.UserDto;
-import com.mihir.blog.blogAppApis.entities.User;
+import com.mihir.blog.blogAppApis.dto.request.UserRequest;
+import com.mihir.blog.blogAppApis.entities.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ public class UserServiceUtil {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    public static User dtoToUser(UserDto userDto){
+    public static UserEntity dtoToUser(UserRequest userRequest){
 //        return User.builder()
 //                   .id(userDto.getId())
 //                   .name(userDto.getName())
@@ -18,10 +18,10 @@ public class UserServiceUtil {
 //                   .password(userDto.getPassword())
 //                   .about(userDto.getAbout())
 //                   .build();
-        return modelMapper.map(userDto,User.class);
+        return modelMapper.map(userRequest, UserEntity.class);
     }
 
-    public static UserDto userToDto(User user){
+    public static UserRequest userToDto(UserEntity userEntity){
 //        return UserDto.builder()
 //                      .id(user.getId())
 //                      .name(user.getName())
@@ -29,6 +29,6 @@ public class UserServiceUtil {
 //                      .password(user.getPassword())
 //                      .about(user.getAbout())
 //                      .build();
-        return modelMapper.map(user, UserDto.class);
+        return modelMapper.map(userEntity, UserRequest.class);
     }
 }

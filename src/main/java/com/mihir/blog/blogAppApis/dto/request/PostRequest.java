@@ -8,13 +8,13 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostDto {
+public class PostRequest {
 
     private Integer postId;
     private String title;
     private String content;
     private String imageName;
     private Date addedDate;
-    private CategoryDto category;
-    private UserDto user;
+    private CategoryRequest category;
+    private UserRequest user;
 }

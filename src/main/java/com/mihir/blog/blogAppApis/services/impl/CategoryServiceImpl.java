@@ -1,7 +1,7 @@
 package com.mihir.blog.blogAppApis.services.impl;
 
-import com.mihir.blog.blogAppApis.dto.request.CategoryDto;
-import com.mihir.blog.blogAppApis.entities.Category;
+import com.mihir.blog.blogAppApis.dto.request.CategoryRequest;
+import com.mihir.blog.blogAppApis.entities.CategoryEntity;
 import com.mihir.blog.blogAppApis.exceptions.ResourceNotFoundException;
 import com.mihir.blog.blogAppApis.repositories.CategoryRepository;
 import com.mihir.blog.blogAppApis.services.CategoryService;
@@ -25,41 +25,42 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public CategoryDto createCategory(CategoryDto categoryDto) {
-        Category category = this.modelMapper.map(categoryDto, Category.class);
-        Category addedCategory = this.categoryRepository.save(category);
-        return this.modelMapper.map(addedCategory,CategoryDto.class);
+    public CategoryRequest createCategory(CategoryRequest categoryRequest) {
+        CategoryEntity categoryEntity = this.modelMapper.map(categoryRequest, CategoryEntity.class);
+        CategoryEntity addedCategoryEntity = this.categoryRepository.save(categoryEntity);
+        return this.modelMapper.map(addedCategoryEntity, CategoryRequest.class);
     }
 
     @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
-        Category category = this.categoryRepository.findById(categoryId)
+    public CategoryRequest updateCategory(CategoryRequest categoryRequest, Integer categoryId) {
+        CategoryEntity categoryEntity = this.categoryRepository.findById(categoryId)
                 .orElseThrow(()->new ResourceNotFoundException("Category","Category Id",categoryId));
-        category.setCategoryTitle(categoryDto.getCategoryTitle());
-        category.setCategoryDescription(categoryDto.getCategoryDescription());
-        Category updatedCategory = this.categoryRepository.save(category);
-        return this.modelMapper.map(updatedCategory, CategoryDto.class);
+        categoryEntity.setCategoryTitle(categoryRequest.getCategoryTitle());
+        categoryEntity.setCategoryDescription(categoryRequest.getCategoryDescription());
+        CategoryEntity updatedCategoryEntity = this.categoryRepository.save(categoryEntity);
+        return this.modelMapper.map(updatedCategoryEntity, CategoryRequest.class);
     }
 
     @Override
-    public CategoryDto getCategoryById(Integer categoryId) {
-        Category category = this.categoryRepository.findById(categoryId).orElseThrow(()->
+    public CategoryRequest getCategoryById(Integer categoryId) {
+        CategoryEntity categoryEntity = this.categoryRepository.findById(categoryId).orElseThrow(()->
                 new ResourceNotFoundException("Category","category id",categoryId));
-        return this.modelMapper.map(category, CategoryDto.class);
+        return this.modelMapper.map(categoryEntity, CategoryRequest.class);
     }
 
     @Override
-    public List<CategoryDto> getAllCategory() {
-        List<Category> categories = this.categoryRepository.findAll();
-        List<CategoryDto> categoryDtos = categories.stream().map(category -> this.modelMapper.map(category, CategoryDto.class))
+    public List<CategoryRequest> getAllCategory() {
+        List<CategoryEntity> categories = this.categoryRepository.findAll();
+//        List<CategoryDto> categoryDtos = categories.stream().map(category -> this.modelMapper.map(category, CategoryDto.class))
+//                .collect(Collectors.toList());
+        return categories.stream().map(category -> this.modelMapper.map(category, CategoryRequest.class))
                 .collect(Collectors.toList());
-        return categoryDtos;
     }
 
     @Override
     public void deleteCategory(Integer categoryId) {
-         Category category=this.categoryRepository.findById(categoryId).orElseThrow(()->
+         CategoryEntity categoryEntity =this.categoryRepository.findById(categoryId).orElseThrow(()->
                  new ResourceNotFoundException("Category","category id",categoryId));
-                 this.categoryRepository.delete(category);
+                 this.categoryRepository.delete(categoryEntity);
     }
 }

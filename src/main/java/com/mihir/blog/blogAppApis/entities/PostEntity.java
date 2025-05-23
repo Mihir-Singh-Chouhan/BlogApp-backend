@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class PostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,8 @@ public class Post {
     private Date addedDate;
 
     @ManyToOne
-    private Category category;
+    private CategoryEntity categoryEntity;
     @ManyToOne
-    private User user;
+    private UserEntity userEntity;
 
 }

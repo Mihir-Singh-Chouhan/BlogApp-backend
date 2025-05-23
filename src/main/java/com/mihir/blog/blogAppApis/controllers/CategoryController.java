@@ -1,10 +1,9 @@
 package com.mihir.blog.blogAppApis.controllers;
 
-import com.mihir.blog.blogAppApis.dto.request.CategoryDto;
+import com.mihir.blog.blogAppApis.dto.request.CategoryRequest;
 import com.mihir.blog.blogAppApis.dto.response.ApiResponse;
 import com.mihir.blog.blogAppApis.services.CategoryService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +14,21 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    private CategoryService categoryService;
-    @Autowired
+    private final CategoryService categoryService;
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
-       CategoryDto createCategory = this.categoryService.createCategory(categoryDto);
-       return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
+    public ResponseEntity<CategoryRequest> createCategory(@Valid @RequestBody CategoryRequest categoryRequest){
+       CategoryRequest createCategory = this.categoryService.createCategory(categoryRequest);
+       return new ResponseEntity<CategoryRequest>(createCategory, HttpStatus.CREATED);
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto,@PathVariable Integer categoryId){
-        CategoryDto updateCategory = this.categoryService.updateCategory(categoryDto,categoryId);
-        return new ResponseEntity<CategoryDto>(updateCategory,HttpStatus.OK);
+    public ResponseEntity<CategoryRequest> updateCategory(@Valid @RequestBody CategoryRequest categoryRequest, @PathVariable Integer categoryId){
+        CategoryRequest updateCategory = this.categoryService.updateCategory(categoryRequest,categoryId);
+        return new ResponseEntity<CategoryRequest>(updateCategory,HttpStatus.OK);
     }
 
     @DeleteMapping("/{categoryId}")
@@ -40,14 +38,14 @@ public class CategoryController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<CategoryDto>> getAllCategory(){
+    public ResponseEntity<List<CategoryRequest>> getAllCategory(){
        return ResponseEntity.ok(categoryService.getAllCategory());
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getUserById(@PathVariable Integer categoryId){
-        CategoryDto getUserById = this.categoryService.getCategoryById(categoryId);
-        return new ResponseEntity<CategoryDto>(getUserById,HttpStatus.OK);
+    public ResponseEntity<CategoryRequest> getUserById(@PathVariable Integer categoryId){
+        CategoryRequest getUserById = this.categoryService.getCategoryById(categoryId);
+        return new ResponseEntity<CategoryRequest>(getUserById,HttpStatus.OK);
     }
 
 }

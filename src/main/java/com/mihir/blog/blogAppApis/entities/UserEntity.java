@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name="users")
 @Getter
 @Setter
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,17 +20,17 @@ public class User {
     private String password;
     private String about;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Post> posts = new ArrayList<>();
-    public User(Integer id, String name, String email, String password, String about,List<Post> posts) {
+    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<PostEntity> postEntities = new ArrayList<>();
+    public UserEntity(Integer id, String name, String email, String password, String about, List<PostEntity> postEntities) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.about = about;
-        this.posts = posts;
+        this.postEntities = postEntities;
     }
 
-    public User() {
+    public UserEntity() {
     }
 }

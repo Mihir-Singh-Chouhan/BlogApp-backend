@@ -1,21 +1,21 @@
 package com.mihir.blog.blogAppApis.services;
 
-import com.mihir.blog.blogAppApis.dto.request.PostDto;
-import com.mihir.blog.blogAppApis.entities.Post;
+import com.mihir.blog.blogAppApis.dto.request.PostRequest;
+import com.mihir.blog.blogAppApis.dto.response.PostResponse;
 
 import java.util.List;
 
 public interface PostService {
 
-    PostDto createPost(PostDto postDto, Integer userId, Integer categoryId);
-    PostDto updatePost(PostDto postDto, Integer postId);
+    PostRequest createPost(PostRequest postRequest, Integer userId, Integer categoryId);
+    PostRequest updatePost(PostRequest postRequest, Integer postId);
     void deletePost(Integer postId);
-    List<PostDto> getAllPost();
-    PostDto getPostById(Integer postId);
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy);
+    PostRequest getPostById(Integer postId);
 
-    List<PostDto> getAllPostByCategory(Integer categoryId);
-    List<PostDto> getAllPostByUser(Integer userId);
+    List<PostRequest> getAllPostByCategory(Integer categoryId);
+    List<PostRequest> getAllPostByUser(Integer userId);
 
     //for searching:
-    List<Post> searchPosts(String keyword);
+    List<PostRequest> searchPosts(String keyword);
 }

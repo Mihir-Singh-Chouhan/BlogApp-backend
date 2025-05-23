@@ -1,10 +1,9 @@
 package com.mihir.blog.blogAppApis.controllers;
 
 import com.mihir.blog.blogAppApis.dto.response.ApiResponse;
-import com.mihir.blog.blogAppApis.dto.request.UserDto;
+import com.mihir.blog.blogAppApis.dto.request.UserRequest;
 import com.mihir.blog.blogAppApis.services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,35 +13,34 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
+    public ResponseEntity<UserRequest> createUser(@Valid @RequestBody UserRequest userRequest)
     {
-       UserDto createUserDto = userService.createUser(userDto);
-       return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
+       UserRequest createUserRequest = userService.createUser(userRequest);
+       return new ResponseEntity<>(createUserRequest, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserRequest>> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Integer userId){
+    public ResponseEntity<UserRequest> getUserById(@PathVariable Integer userId){
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("id") Integer myId){  //since id and myId both are different strings so we specify here
-        UserDto updatedUserDto = userService.updateUser(userDto,myId);
+    public ResponseEntity<UserRequest> updateUser(@Valid @RequestBody UserRequest userRequest, @PathVariable("id") Integer myId){  //since id and myId both are different strings so we specify here
+        UserRequest updatedUserRequest = userService.updateUser(userRequest,myId);
 //        return new ResponseEntity<>(updatedUserDto,HttpStatus.CREATED);
-        return ResponseEntity.ok(updatedUserDto);
+        return ResponseEntity.ok(updatedUserRequest);
     }
 
     @DeleteMapping("/{userId}")

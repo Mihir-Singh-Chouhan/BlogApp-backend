@@ -1,6 +1,7 @@
-package com.mihir.blog.blogAppApis.exceptions;
+package com.mihir.blog.blogAppApis.exceptions.handler;
 
 import com.mihir.blog.blogAppApis.dto.response.ApiResponse;
+import com.mihir.blog.blogAppApis.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse> resourceNotFoundExceptionhandler(ResourceNotFoundException exception){
+    public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException exception){
       String message = exception.getMessage();
       ApiResponse apiResponse = new ApiResponse(message,false);
       return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);

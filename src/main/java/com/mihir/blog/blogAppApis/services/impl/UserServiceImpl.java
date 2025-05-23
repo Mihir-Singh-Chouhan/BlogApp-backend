@@ -1,7 +1,7 @@
 package com.mihir.blog.blogAppApis.services.impl;
 
-import com.mihir.blog.blogAppApis.entities.User;
-import com.mihir.blog.blogAppApis.dto.request.UserDto;
+import com.mihir.blog.blogAppApis.entities.UserEntity;
+import com.mihir.blog.blogAppApis.dto.request.UserRequest;
 import com.mihir.blog.blogAppApis.services.UserService;
 import com.mihir.blog.blogAppApis.repositories.UserRepository;
 import com.mihir.blog.blogAppApis.utils.UserServiceUtil;
@@ -25,47 +25,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
-        User user = dtoToUser(userDto);
-        User savedUser = userRepository.save(user);
-        return userToDto(savedUser);
+    public UserRequest createUser(UserRequest userRequest) {
+        UserEntity userEntity = dtoToUser(userRequest);
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+        return userToDto(savedUserEntity);
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(()->
+    public UserRequest updateUser(UserRequest userRequest, Integer userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(()->
                 new ResourceNotFoundException("User","Id",userId));
 
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(user.getPassword());
-        user.setAbout(user.getAbout());
+        userEntity.setName(userRequest.getName());
+        userEntity.setEmail(userRequest.getEmail());
+        userEntity.setPassword(userEntity.getPassword());
+        userEntity.setAbout(userEntity.getAbout());
 
-        User updatedUser = this.userRepository.save(user);
-        return userToDto(updatedUser);
+        UserEntity updatedUserEntity = this.userRepository.save(userEntity);
+        return userToDto(updatedUserEntity);
 
     }
 
     @Override
-    public UserDto getUserById(Integer userId) {
+    public UserRequest getUserById(Integer userId) {
 
-        User user = userRepository.findById(userId).orElseThrow(()->
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(()->
                     new ResourceNotFoundException("User","Id",userId));
-        return userToDto(user);
+        return userToDto(userEntity);
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public List<UserRequest> getAllUsers() {
 
-        List<User> users = this.userRepository.findAll();
-       List<UserDto> userDtos = users.stream().map(UserServiceUtil::userToDto).collect(Collectors.toList());
-        return userDtos;
+        List<UserEntity> userEntities = this.userRepository.findAll();
+//       List<UserDto> userDtos = users.stream().map(UserServiceUtil::userToDto).collect(Collectors.toList());
+        return userEntities.stream().map(UserServiceUtil::userToDto).collect(Collectors.toList());
     }
 
     @Override
     public void deleteUser(Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
-        userRepository.delete(user);
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+        userRepository.delete(userEntity);
     }
 
 
