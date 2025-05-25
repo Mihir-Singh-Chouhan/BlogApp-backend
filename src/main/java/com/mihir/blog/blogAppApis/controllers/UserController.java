@@ -39,7 +39,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserRequest> updateUser(@Valid @RequestBody UserRequest userRequest, @PathVariable("id") Integer myId){  //since id and myId both are different strings so we specify here
         UserRequest updatedUserRequest = userService.updateUser(userRequest,myId);
-//        return new ResponseEntity<>(updatedUserDto,HttpStatus.CREATED);
+       // return new ResponseEntity<>(updatedUserRequest,HttpStatus.CREATED);
         return ResponseEntity.ok(updatedUserRequest);
     }
 

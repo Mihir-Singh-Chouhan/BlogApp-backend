@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -22,6 +24,10 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<PostEntity> postEntities = new ArrayList<>();
+
+   @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<CommentEntity> commentEntitySet = new HashSet<>();
+
     public UserEntity(Integer id, String name, String email, String password, String about, List<PostEntity> postEntities) {
         this.id = id;
         this.name = name;
@@ -29,6 +35,7 @@ public class UserEntity {
         this.password = password;
         this.about = about;
         this.postEntities = postEntities;
+
     }
 
     public UserEntity() {
