@@ -6,6 +6,7 @@ import com.mihir.blog.blogAppApis.entities.PostEntity;
 import com.mihir.blog.blogAppApis.exceptions.ResourceNotFoundException;
 import com.mihir.blog.blogAppApis.repositories.CommentRepository;
 import com.mihir.blog.blogAppApis.repositories.PostRepository;
+import com.mihir.blog.blogAppApis.repositories.UserRepository;
 import com.mihir.blog.blogAppApis.services.CommentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ public class CommentServiceImpl implements CommentService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
     @Autowired
-    public CommentServiceImpl(PostRepository postRepository, CommentRepository commentRepository) {
+    public CommentServiceImpl(PostRepository postRepository, CommentRepository commentRepository,UserRepository userRepository) {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
     @Autowired
     private ModelMapper modelMapper;
@@ -32,6 +35,8 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity comment = this.modelMapper.map(commentRequest, CommentEntity.class);
 
         comment.setPost(post);
+
+       // add logic for user details
 
         CommentEntity savedComment = this.commentRepository.save(comment);
         return this.modelMapper.map(savedComment,CommentRequest.class);
