@@ -34,13 +34,13 @@ public class PostController {
     private String path;
 
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
-    public ResponseEntity<PostRequest> createPost(@RequestBody PostRequest postRequest, @PathVariable Integer userId, @PathVariable Integer categoryId){
+    public ResponseEntity<PostRequest> createPost(@RequestBody PostRequest postRequest, @PathVariable Long userId, @PathVariable Integer categoryId){
     PostRequest createPost = this.postService.createPost(postRequest,userId,categoryId);
     return new ResponseEntity<PostRequest>(createPost, HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<List<PostRequest>> getAllPostByUser(@PathVariable Integer userId){
+    public ResponseEntity<List<PostRequest>> getAllPostByUser(@PathVariable Long userId){
         List<PostRequest> posts =  this.postService.getAllPostByUser(userId);
         return new ResponseEntity<List<PostRequest>>(posts,HttpStatus.OK);
     }

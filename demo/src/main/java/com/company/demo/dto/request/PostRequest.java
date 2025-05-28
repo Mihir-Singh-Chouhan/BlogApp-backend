@@ -1,8 +1,7 @@
 package com.company.demo.dto.request;
 
-import lombok.Getter;
+import com.company.demo.dto.response.UserResponse;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +16,7 @@ public class PostRequest {
     private String imageName;
     private Date addedDate;
     private CategoryRequest category;
-    private UserRequest user;
+    private UserResponse user;
 
     private Set<CommentRequest> commentEntitySet = new HashSet<>();
 
@@ -134,7 +133,7 @@ public class PostRequest {
      *
      * @return property value of user
      */
-    public UserRequest getUser() {
+    public UserResponse getUser() {
         return user;
     }
 
@@ -143,7 +142,7 @@ public class PostRequest {
      *
      * @param user value to be assigned to property user
      */
-    public void setUser(UserRequest user) {
+    public void setUser(UserResponse user) {
         this.user = user;
     }
 

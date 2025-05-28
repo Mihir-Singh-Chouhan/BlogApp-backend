@@ -1,5 +1,8 @@
-package com.company.demo.dto.request;
+package com.company.demo.dto.response;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -8,7 +11,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRequest {
+public class UserResponse {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotEmpty
     @Size(min=4,message = "Username must have atleast 4 charaters")
@@ -24,6 +31,13 @@ public class UserRequest {
     @NotEmpty
     private String about;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * Getter method for property <tt>name</tt>.

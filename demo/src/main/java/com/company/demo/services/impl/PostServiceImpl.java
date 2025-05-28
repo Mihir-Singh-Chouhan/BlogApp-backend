@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
     private UserRepository userRepository;
 
     @Override
-    public PostRequest createPost(PostRequest postRequest, Integer userId, Integer categoryId) {
+    public PostRequest createPost(PostRequest postRequest, Long userId, Integer categoryId) {
 
         UserEntity userEntity = this.userRepository.findById(userId)
                         .orElseThrow(()-> new ResourceNotFoundException("User","User Id",userId));
@@ -115,7 +115,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostRequest> getAllPostByUser(Integer userId) {
+    public List<PostRequest> getAllPostByUser(Long userId) {
         UserEntity userEntity = this.userRepository.findById(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User","UserId",userId));
 

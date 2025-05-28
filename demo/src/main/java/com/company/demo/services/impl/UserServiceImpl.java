@@ -1,12 +1,15 @@
 package com.company.demo.services.impl;
 
 import com.company.demo.dto.request.UserRequest;
+import com.company.demo.dto.response.UserResponse;
 import com.company.demo.entities.UserEntity;
 import com.company.demo.exceptions.ResourceNotFoundException;
 import com.company.demo.repositories.UserRepository;
 import com.company.demo.services.UserService;
-import com.company.demo.utils.UserServiceUtil;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +22,25 @@ import static com.company.demo.utils.UserServiceUtil.userToDto;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
+    private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserRequest createUser(UserRequest userRequest) {
         UserEntity userEntity = dtoToUser(userRequest);
+        userEntity.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return userToDto(savedUserEntity);
     }
 
     @Override
-    public UserRequest updateUser(UserRequest userRequest, Integer userId) {
+    public UserRequest updateUser(UserRequest userRequest, Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(()->
                 new ResourceNotFoundException("User","Id",userId));
 
@@ -48,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRequest getUserById(Integer userId) {
+    public UserRequest getUserById(Long userId) {
 
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(()->
                     new ResourceNotFoundException("User","Id",userId));
@@ -56,15 +63,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserRequest> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
 
         List<UserEntity> userEntities = this.userRepository.findAll();
 //       List<UserDto> userDtos = users.stream().map(UserServiceUtil::userToDto).collect(Collectors.toList());
-        return userEntities.stream().map(UserServiceUtil::userToDto).collect(Collectors.toList());
+         return userEntities.stream().map(user -> modelMapper.map(user,UserResponse.class)).collect(Collectors.toList());
     }
 
     @Override
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
         userRepository.delete(userEntity);
     }

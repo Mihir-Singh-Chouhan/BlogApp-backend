@@ -12,34 +12,36 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="users")
 public class UserEntity implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
     @Column(name = "user_name",nullable = false,length = 100)
     private String name;
     private String email;
     private String password;
-    private String about;
+    private String about_user;
 
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL,fetch = FetchType.EAGER      )
     private List<PostEntity> postEntities = new ArrayList<>();
 
    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<CommentEntity> commentEntitySet = new HashSet<>();
 
-   @ManyToMany
+   @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(name = "user_role",
    joinColumns = @JoinColumn(name = "user",referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name="role",referencedColumnName = "id")
    )
    private Set<RoleEntity> roles = new HashSet<>();
 
-    public UserEntity(Integer id, String name, String email, String password, String about, List<PostEntity> postEntities) {
+    public UserEntity(Long id, String name, String email, String password, String about_user, List<PostEntity> postEntities) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.about = about;
+        this.about_user = about_user;
         this.postEntities = postEntities;
 
     }
@@ -49,7 +51,7 @@ public class UserEntity implements UserDetails {
      *
      * @return property value of id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -58,7 +60,7 @@ public class UserEntity implements UserDetails {
      *
      * @param id value to be assigned to property id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -104,16 +106,16 @@ public class UserEntity implements UserDetails {
      * @return property value of about
      */
     public String getAbout() {
-        return about;
+        return about_user;
     }
 
     /**
      * Setter method for property <tt>about</tt>.
      *
-     * @param about value to be assigned to property about
+     * @param about_user value to be assigned to property about
      */
-    public void setAbout(String about) {
-        this.about = about;
+    public void setAbout(String about_user) {
+        this.about_user = about_user;
     }
 
     /**
